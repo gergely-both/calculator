@@ -6,11 +6,10 @@ button_properties = {
     "relief": "raised"
 }
 
-
 class Calculator:
     def __init__(self, master):
         self.master = master
-        master.title("Python calculator")
+        self.master.title("Python calculator")
         self.label = tk.Label(master, text=0)
         self.label.grid(row=0, column=0, columnspan=3)
         self.button_back = tk.Button(master, text="BACK", command=lambda: self.parse_input("BACK"), **button_properties)
@@ -63,10 +62,9 @@ class Calculator:
         self.query = []
         self.memory = "0"
 
-    
+
     def display_input(self):
         self.label.config(text="".join(self.user_input))
-
 
     def dotted_value(self):
         if not self.user_input:
@@ -75,7 +73,6 @@ class Calculator:
         elif "." not in self.user_input:
             self.user_input.append(".")
             self.display_input()
-
 
     def change_sign(self):
         sign = "-"
@@ -92,28 +89,23 @@ class Calculator:
                 self.query[0] = sign + self.query[0]
             self.label.config(text=self.query[0])
 
-
     def clear_input(self):
         self.user_input.clear()
         self.label.config(text=0)
-
 
     def remove_last(self):
         if self.user_input:
             self.user_input.pop()
             self.label.config(text="".join(self.user_input) or 0)
 
-
     def memory_operate(self, value):
         operation = value[1]
         self.memory = str(eval(self.memory + operation + ("".join(self.user_input) or self.query[0])))
         self.user_input.clear()
-
-    
+  
     def memory_recall(self):
         self.user_input = [i for i in self.memory]
         self.display_input()
-
 
     def input_operator(self, value):
         number = "".join(self.user_input) or "0"
@@ -150,7 +142,6 @@ class Calculator:
                 else:
                     self.query[1] = value
 
-
     def equals_to(self, value):
         self.query.pop()
         total = eval("".join(self.query))
@@ -160,7 +151,6 @@ class Calculator:
         else:
             self.query.extend([str(total), value])
         self.label.config(text=total)
-
 
     def input_digit(self, value):
         if self.user_input:
@@ -174,7 +164,6 @@ class Calculator:
         else:
             self.user_input.append(str(value))
             self.label.config(text=self.user_input[0])
-
 
     def input_symbol(self, value):
         if value in {"+", "-", "*", "/", "="}:
@@ -191,7 +180,6 @@ class Calculator:
             self.memory_operate(value)
         elif value == "mr":
             self.memory_recall()
-
 
     def parse_input(self, value):
         if type(value) == int:
